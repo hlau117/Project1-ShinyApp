@@ -150,7 +150,13 @@ function(input, output, session) {
       domain = postcode_bounds@data$postcode_count
       )
       
-      casecountpopup = paste0("<strong>", postcode_bounds@data$postcode, "</strong>", "<br>", "Number of Cases: ", postcode_bounds@data$postcode_count)
+      casecountpopup = paste0("<strong>", postcode_bounds@data$postcode, "</strong>", "<br>", 
+                              "Number of Cases: ", postcode_bounds@data$postcode_count, "<br>", 
+                              "Violations Ratio: ", format(postcode_bounds@data$postcode_ratio, digits=4))
+      
+      
+      title=paste0("<strong>","SF High Risk Counts by Top 10 Postcodes","</strong>","<br>",
+                   "(Contributes 65% of HR Violations in SF)", "<br>")
       
       leafletProxy("map", data = postcode_bounds)%>%
         clearMarkers()%>%
@@ -160,7 +166,7 @@ function(input, output, session) {
                   color="#BDBDC3",
                   weight=1,
                   popup= casecountpopup)%>%
-        addLegend(position = "bottomleft", pal = pal, values = ~postcode_count, title = "<strong>SF High Risk Counts by Postcode</strong><br>")
+        addLegend(position = "bottomleft", pal = pal, values = ~postcode_count, title = title)
       
     }else if(input$checkbox==FALSE){
         

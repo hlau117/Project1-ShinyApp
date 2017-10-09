@@ -13,6 +13,7 @@ load("Clean_SF_rest.rda")
     group_by(postcode) %>%
     mutate(postcode_count= n())%>%
     distinct(postcode,risk_cat, postcode_count)%>%
+    mutate(postcode_ratio= postcode_count/2337)%>%
     arrange(desc(postcode_count))%>%
     head(10)
   
@@ -54,7 +55,7 @@ load("Clean_SF_rest.rda")
   #if (input$checkbox== 'High Risk')
   hr_density=total_postcode %>%
     filter(risk_cat=="High Risk") %>%
-    select(postcode, postcode_count)
+    select(postcode, postcode_count, postcode_ratio)
   
   hr_density$postcode= as.factor(hr_density$postcode)
   
