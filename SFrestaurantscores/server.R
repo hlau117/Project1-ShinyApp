@@ -116,7 +116,7 @@ function(input, output, session) {
     top20markers <- SF_top20_rest()
     
     
-   #add popup to whole map that says no applicable data for date and risk category
+   #check if there is data for date input
     
     if(nrow(top20markers)<1){
       leafletProxy("map", data = top20markers)%>%
@@ -143,7 +143,7 @@ function(input, output, session) {
   
   
   observeEvent(input$checkbox,{
-    
+    #plot chloropleth on number of high risk violations by postcodes
     if(input$checkbox==TRUE){
       pal = colorNumeric(
       palette = "YlOrRd",
@@ -208,7 +208,7 @@ function(input, output, session) {
   })
   
   output$name_postcode <- renderPlotly({
-    #plot risk category restaurants by postcode
+    #plot high risk category restaurants by postcode 94133
     
     
     name_postcode_94133=SF_rest%>%
