@@ -152,11 +152,12 @@ function(input, output, session) {
       
       casecountpopup = paste0("<strong>", postcode_bounds@data$postcode, "</strong>", "<br>", 
                               "Number of Cases: ", postcode_bounds@data$postcode_count, "<br>", 
+                              "Number of Restaurants: ", postcode_bounds@data$num_rest, "<br>",
                               "Violations Ratio: ", format(postcode_bounds@data$postcode_ratio, digits=4))
       
       
-      title=paste0("<strong>","SF High Risk Counts by Top 10 Postcodes","</strong>","<br>",
-                   "(Contributes 65% of HR Violations in SF)", "<br>")
+      title=paste0("<strong>","SF High Risk Counts by Postcodes","</strong>","<br>",
+                   "(Total HR Violations in SF: 3601)", "<br>")
       
       leafletProxy("map", data = postcode_bounds)%>%
         clearMarkers()%>%
@@ -199,7 +200,7 @@ function(input, output, session) {
        geom_bar(aes(fill= risk_cat), stat='identity', position='dodge') +
        ggtitle("Number of Different Risk Category Violations by SF Postcodes")+
        labs(y='count') + 
-       theme(axis.text.x = element_text(angle = 20, hjust = 1))
+       theme(axis.text.x = element_text(angle = 45, hjust = 1))
        
       ggplotly(plot_total_postcode)
        
