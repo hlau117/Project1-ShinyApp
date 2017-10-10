@@ -54,13 +54,12 @@ fluidPage(theme="bootstrap_solar.css",
                   ),
                    
     
-      checkboxInput("checkbox", label = ("Display High Risk Violations Heatmap by Postcode "), value= FALSE) 
-           
-                  
-                         
-       
-       
-       ),
+      checkboxInput("checkbox", label = ("Display High Risk Violations Heatmap by Postcode "), value= FALSE),
+      
+      selectInput("bar_postcode",
+                  "Plot Restaurants of HR Violations for Top 7 Postcode:",
+                  choices = c("94133", "94103", "94109","94110", "94102", "94122", "94108"))
+    ),
     
     # Show SF map with location markers for restaurants
     mainPanel(
@@ -68,7 +67,7 @@ fluidPage(theme="bootstrap_solar.css",
         tabPanel("SF Restaurant Location Map",leafletOutput("map", width = "100%", height = 400)),
         tabPanel("Time Series: Number of Risk Violations", dygraphOutput("countrisk")),
         tabPanel("Bar Chart: Risk Violations by SF Postcodes  ", plotlyOutput("postcode", width="100%", height=400)),
-        tabPanel("Bar Chart: Top 20 Restaurants Postcode 94133", 
+        tabPanel(paste("Bar Chart: Top 20 Restaurants Postcode"), 
                  plotlyOutput("name_postcode", width="100%", height=400))
         
       )
@@ -79,3 +78,4 @@ fluidPage(theme="bootstrap_solar.css",
     
   )
 )
+

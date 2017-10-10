@@ -52,8 +52,9 @@ function(input, output, session) {
                       con_1, paste, collapse=", ")
         
         con_1= con_1 %>% 
-          arrange(desc(count)) %>%
-          head(20)
+          arrange(desc(count)) 
+          
+          
       }
       
     #condition 2 ( no input day value)
@@ -72,8 +73,8 @@ function(input, output, session) {
                           con_2, paste, collapse=", ")
           
           con_2= con_2 %>%
-            arrange(desc(count)) %>%
-            head(20)
+            arrange(desc(count)) 
+            
         }else{
             con_2
           }
@@ -93,8 +94,8 @@ function(input, output, session) {
         con_3=aggregate(descr~name + address + postcode + long + lat + count,
                         con_3, paste, collapse=", ")
         con_3= con_3 %>%
-          arrange(desc(count)) %>%
-          head(20)
+          arrange(desc(count)) 
+          
       
       
       }else{
@@ -127,8 +128,9 @@ function(input, output, session) {
     if(nrow(top20markers)>0){
     leafletProxy("map", data = top20markers) %>%
       clearMarkers()%>%
-      addAwesomeMarkers(lng=~long,
+      addCircleMarkers(lng=~long,
                  lat=~lat, 
+                 radius=3,
                  popup= paste("Address:", paste(top20markers$address, top20markers$postcode, sep=','), "<br>",
                               paste(paste("#",input$risk_cat,"Violations", sep=" "), top20markers$count, sep=":"), "<br>",
                               "Violation Description:", top20markers$descr, "<br>"
@@ -206,25 +208,69 @@ function(input, output, session) {
      
   })
   
-  output$name_postcode <- renderPlotly({
-    #plot high risk category restaurants by postcode 94133
+  #compute top 20 restaurant of high risk violations for input postcode
+  plot_postcodes <- reactive({
     
-    
-    name_postcode_94133=SF_rest%>%
-      filter(postcode==94133 & risk_cat=="High Risk")%>%
+    name_postcode=SF_rest%>%
+      filter(postcode==input$bar_postcode & risk_cat=="High Risk")%>%
       group_by(name)%>%
       mutate(highriskcount=n())%>%
       distinct(name, postcode,highriskcount)%>%
       arrange(desc(highriskcount))%>%
-      head(20)%>%
+      head(20)
+    
+  })
+  
+  # produce respective labels for input postcode
+  postcode_labels <-reactive({
+    
+    if (input$bar_postcode== "94133"){
+      labels="*Contributes 28% of HR violations in Postal Code 94133"
+      
+    }else if(input$bar_postcode== "94103"){
+      labels="*Contributes 33% of HR violations in Postal Code 94103"
+      
+    }else if(input$bar_postcode== "94109"){
+      labels="*Contributes 34% of HR violations in Postal Code 94109"
+      
+    
+    }else if(input$bar_postcode== "94110"){
+      labels="*Contributes 30% of HR violations in Postal Code 94110"
+      
+      
+    }else if(input$bar_postcode== "94102"){
+      labels="*Contributes 37% of HR violations in Postal Code 94102"
+      
+      
+    }else if(input$bar_postcode== "94122"){
+      labels="*Contributes 36% of HR violations in Postal Code 94122"
+      
+      
+    }else
+      labels="*Contributes 51% of HR violations in Postal Code 94108"
+      
+      
+      
+      
+  })
+  
+  
+  
+  
+  output$name_postcode <- renderPlotly({
+    #plot high risk category restaurants by postcode 
+    
+    label=postcode_labels()
+    
+    rest_postcode=plot_postcodes()%>%
       ggplot(aes(x= postcode, y=highriskcount)) + 
       geom_bar(aes(fill= name), stat='identity', position='dodge') +
-      ggtitle("Top 20 Restaurants with High Risk Category Violations in Postcode 94133")+
+      ggtitle(paste("Top 20 Restaurants with High Risk Category Violations in Postcode" , input$bar_postcode, sep= " "))+
       labs(y='count') + 
       theme(axis.text.x = element_text(angle = 20, hjust = 1))+
-      annotate("text",x=1, y=1, label = "*Contributes 30% of HR violations in Postal Code 94133")
+      annotate("text",x=1, y=1, label = label )
     
-    ggplotly(name_postcode_94133)
+    ggplotly(rest_postcode)
     
     
     
