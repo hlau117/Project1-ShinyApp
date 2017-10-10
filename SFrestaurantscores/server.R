@@ -151,7 +151,7 @@ function(input, output, session) {
       )
       
       casecountpopup = paste0("<strong>", postcode_bounds@data$postcode, "</strong>", "<br>", 
-                              "Number of Cases: ", postcode_bounds@data$postcode_count, "<br>", 
+                              "Number of HR Violations: ", postcode_bounds@data$postcode_count, "<br>", 
                               "Number of Restaurants: ", postcode_bounds@data$num_rest, "<br>",
                               "Violations Ratio: ", format(postcode_bounds@data$postcode_ratio, digits=4))
       
@@ -185,9 +185,7 @@ function(input, output, session) {
     
   })
   
-  
-  
-  
+ 
   
   
   
@@ -223,7 +221,8 @@ function(input, output, session) {
       geom_bar(aes(fill= name), stat='identity', position='dodge') +
       ggtitle("Top 20 Restaurants with High Risk Category Violations in Postcode 94133")+
       labs(y='count') + 
-      theme(axis.text.x = element_text(angle = 20, hjust = 1))
+      theme(axis.text.x = element_text(angle = 20, hjust = 1))+
+      annotate("text",x=1, y=1, label = "*Contributes 30% of HR violations in Postal Code 94133")
     
     ggplotly(name_postcode_94133)
     

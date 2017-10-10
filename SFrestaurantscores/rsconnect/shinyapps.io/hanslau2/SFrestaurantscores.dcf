@@ -5,8 +5,9 @@ account: hanslau2
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 221258
-bundleId: 1007373
+bundleId: 1018424
 url: https://hanslau2.shinyapps.io/SFrestaurantscores/
-when: 1506972544.24853
+when: 1507604249.05481
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: cb_2016_us_zcta510_500k.cpg|cb_2016_us_zcta510_500k.dbf|cb_2016_us_zcta510_500k.prj|cb_2016_us_zcta510_500k.shp.ea.iso.xml|cb_2016_us_zcta510_500k.shp.iso.xml|cb_2016_us_zcta510_500k.shp.xml|cb_2016_us_zcta510_500k.shx|www/bootstrap_darkly.css|www/bootstrap_flatly.css|www/bootstrap_simplex.css|www/bootstrap_superhero.css

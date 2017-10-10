@@ -68,10 +68,11 @@ fluidPage(theme="bootstrap_solar.css",
         tabPanel("SF Restaurant Location Map",leafletOutput("map", width = "100%", height = 400)),
         tabPanel("Time Series: Number of Risk Violations", dygraphOutput("countrisk")),
         tabPanel("Bar Chart: Risk Violations by SF Postcodes  ", plotlyOutput("postcode", width="100%", height=400)),
-        tabPanel("Bar Chart: Top 20 Restaurants Postcode 94133", plotlyOutput("name_postcode", width="100%", height=400))
-        
+        tabPanel("Bar Chart: Top 20 Restaurants Postcode 94133", 
+                 plotlyOutput("name_postcode", width="100%", height=400))
         
       )
+      
       
       
     )
