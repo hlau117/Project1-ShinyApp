@@ -49,7 +49,7 @@ fluidPage(theme="bootstrap_solar.css",
       
       
       selectInput("risk_cat",
-                   "Risk Category:",
+                   "Violation Type:",
                    choices = sort(factor(unique(SF_rest$risk_cat), levels=c("No Risk","Low Risk", "Moderate Risk", "High Risk")))
                   ),
                    
